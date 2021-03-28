@@ -43,7 +43,7 @@
     th:classappend="${#fields.hasErrors('email') ? 'is-invalid':''}"
     placeholder="Enter your email" required="required" th:value="${user.email}">
     
-        <div class="invalid-feedback" th:each="e :${#fields.errors('email')}" th:text=${e}></div>
+        <div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text=${e}></div>
   </div>
   
     <div class="mb-3">

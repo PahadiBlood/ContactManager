@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+
+		<div class="container">
+			<div class="row">
+			<div class="col-md-10 offset-md-1">
+			<div class="my-card">
+				<ul th:each="contacts : ${contact}">
+					<li th:text="${contacts.cid}"></li>
+					<li th:text="${contacts.name}"></li>
+				</ul>
+				</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "CONTACT")
@@ -16,11 +18,17 @@ public class Contact {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cid;
+	
+	@Size(min=2, message = "Fied should contaion more then 2 charachters.")
+	@NotBlank(message = "This field can not be blank.")
 	private String name;
 	private String secondName;
 	private String work;
 	private String email;
 	private String image;
+	
+	@Size(min=10, max = 10, message = "Only 10 digits allowed.")
+	@NotBlank(message = "This field can not be blank.")
 	private String phone;
 
 	@Column(length = 500)

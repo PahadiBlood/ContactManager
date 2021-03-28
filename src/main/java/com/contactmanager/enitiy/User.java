@@ -29,12 +29,12 @@ public class User {
 	@Size(min = 2, max = 20, message = "Name length can not be less than 2 and more than 20.")
 	private String name;
 
-	@NotBlank(message = "Email can't be blank.")
+	@NotBlank(message = "Email can not be blank.")
 	@Pattern(regexp = ".+@.+\\..+",message = "Enter valid email.")
 	@Column(unique = true)
 	private String email;
 	
-	@NotBlank(message = "Password can't be blank.")
+	@NotBlank(message = "Password can not be blank.")
 	@Size(min=5, message="Password should be more than 4 characters.")
 	private String password;
 	

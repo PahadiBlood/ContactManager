@@ -1,12 +1,15 @@
 package com.contactmanager.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +35,15 @@ public class UserController {
 		model.addAttribute("user", user);
 	}
 
+//show dashboard
+
 	@RequestMapping("/dashboard")
 	public String dasthboard(Model model, Principal principal) {
 
 		return "normal/user-dashboard";
 	}
+
+//show contact form
 
 	@RequestMapping("/contact-form")
 	public String showContactform(Model model, User user) {
@@ -45,10 +52,15 @@ public class UserController {
 		return "normal/contact-form";
 	}
 
+//Add contact data in database
+
 	@PostMapping("/addContact")
-	public String getContactData(Contact contact, Model model,
-			@RequestParam("profile_image") MultipartFile file,
-			Principal principal, HttpSession session) {
+	public String saveContactData(@Valid Contact contact, BindingResult result, Model model,
+			@RequestParam("profile_image") MultipartFile file, Principal principal, HttpSession session) {
+		if (result.hasErrors()) {
+			model.addAttribute("contact", contact);
+			return "normal/contact-form";
+		}
 
 		try {
 
@@ -62,6 +74,19 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "normal/contact-form";
+	}
+
+//show all the contacts
+
+	@RequestMapping("/view-contacts")
+	public String showContacts(Model model, Principal principal) {
+		String username = principal.getName();
+		User user = service.findByEmail(username);
+
+		List<Contact> contacts = user.getContacts();
+		model.addAttribute("title","View Contacts");
+		model.addAttribute("contact",contacts);
+		return "normal/view-contacts";
 	}
 
 }
