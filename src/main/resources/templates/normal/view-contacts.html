@@ -8,19 +8,55 @@
 <body>
 	<section>
 
-		<div class="container">
-			<div class="row">
-			<div class="col-md-10 offset-md-1">
-			<div class="my-card">
-				<ul th:each="contacts : ${contact}">
-					<li th:text="${contacts.cid}"></li>
-					<li th:text="${contacts.name}"></li>
-				</ul>
-				</div>
-				</div>
-			</div>
-		</div>
+					<div class="my-card mx-3">
+						<h3 class="text-center">Contacts</h3>
 
+						<!-- show all comments -->
+						<table class="table table-striped">
+							<thead class="head-darks">
+								<tr>
+									<th scope="col">Profile</th>
+									<th scope="col">First</th>
+									<th scope="col">Nick Name</th>
+									<th scope="col">Phone</th>
+									<th scope="col">Email</th>
+									<th scope="col">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="contacts:${contact}" th:object="${contacts}">
+									<td><img class="contact_profile" th:src="@{'/img/'+${contacts.image}}" alt="Profile Picture" src=""></td>
+									<td th:text="*{name}"></td>
+									<td th:text="*{secondName}"></td>
+									<td th:text="*{phone}"></td>
+									<td><a style="text-decoration:none;" th:href="@{'/user/contact/profile/'+*{cid}}"><span th:text="*{email}"></span></a></td>
+									<td>
+									<button class="btn btn-danger btn-sm">Delete</button>
+									<button class="btn btn-primary btn-sm">Update</button>
+								</tr>
+							</tbody>
+						</table>
+						
+						<!-- pagination -->
+						<nav aria-label="Page navigation example">
+  <ul class="pagination">
+  
+  <!-- go back page link -->
+    <li th:if="${currentPage != 0}" class="page-item" ><a class="page-link" th:href="@{'/user/view-contacts/'+${currentPage-1}}">Previous</a></li>
+    
+   <!--  #numbers.sequence(firstPage,lastPage); -->
+   <!-- all page link -->
+    <li th:if="${totalPages!=1}" th:classappend="${currentPage==i-1} ? 'active':'' " th:each="i : ${#numbers.sequence(1,totalPages)}" class="page-item">
+    <a class="page-link"th:href="@{'/user/view-contacts/'+${i-1}}"><span th:text="${i}"></span></a></li>
+    
+  <!-- go next page link-->
+    <li th:if="${currentPage+1 != totalPages}" class="page-item">
+    <a class="page-link" th:href="@{'/user/view-contacts/'+${currentPage+1}}">Next</a></li>
+  </ul>
+</nav>
+						
+					</div>
+		
 
 	</section>
 </body>

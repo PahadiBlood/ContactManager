@@ -40,7 +40,7 @@ body {
 }
 
 .sidebar {
-	z-index:1;
+	z-index: 1;
 	width: 22%;
 	background: white;
 	height: 100vh;
@@ -67,27 +67,24 @@ body {
 	height: 0.5px;
 }
 
-.sidebar .cls_btn{
+.sidebar .cls_btn {
 	position: absolute;
-	top:6px;
+	top: 6px;
 	right: 20px;
 	font-size: 22px;
-	cursor:pointer;
-	
+	cursor: pointer;
 }
 
-.content .cls_btn{
+.content .cls_btn {
 	position: absolute;
-	top:6px;
+	top: 6px;
 	right: 20px;
 	font-size: 22px;
-	cursor:pointer;
-	
+	cursor: pointer;
 }
 
 @media screen and (max-width:800px) {
-	.sidebar {	
-		
+	.sidebar {
 		width: 65% !important;
 		background: white;
 		display: none;
@@ -103,4 +100,32 @@ body {
 .content {
 	margin-left: 22%;
 	margin-top: 50px;
+}
+
+.head-darks {
+	background-color: black;
+	color: white;
+}
+
+.contact_profile {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid gray;
+}
+
+.contact_profile_pic {
+	width: 160px;
+	height: 160px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid gray;
+}
+
+.bio {
+	background-color: #f7f7f7d1;
+	padding: 10px;
+	border: 1px solid #8080808f;
+	font-family: system-ui;
 }

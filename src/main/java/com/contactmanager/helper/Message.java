@@ -1,21 +1,21 @@
 package com.contactmanager.helper;
 
 public class Message {
-	private String content;
+	private String msg;
 	private String type;
 
-	public Message(String content, String type) {
+	public Message(String msg, String type) {
 		super();
-		this.content = content;
+		this.msg = msg;
 		this.type = type;
 	}
 
-	public String getContent() {
-		return content;
+	public String getmsg() {
+		return msg;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setmsg(String msg) {
+		this.msg = msg;
 	}
 
 	public String getType() {

@@ -1,16 +1,19 @@
 package com.contactmanager.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,15 +81,33 @@ public class UserController {
 
 //show all the contacts
 
-	@RequestMapping("/view-contacts")
-	public String showContacts(Model model, Principal principal) {
+	@RequestMapping("/view-contacts/{page}")
+	public String showContacts(Model model, Principal principal, @PathVariable("page") int page) {
 		String username = principal.getName();
 		User user = service.findByEmail(username);
 
-		List<Contact> contacts = user.getContacts();
-		model.addAttribute("title","View Contacts");
-		model.addAttribute("contact",contacts);
+		Pageable pagable = PageRequest.of(page, 8);
+
+		Page<Contact> contacts = service.findContactsByUserId(user.getId(), pagable);
+		model.addAttribute("title", "View Contacts");
+		model.addAttribute("contact", contacts);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", contacts.getTotalPages());
 		return "normal/view-contacts";
 	}
 
+	// view contacts profile
+	
+	@RequestMapping("/contact/profile/{id}")
+	public String viewContactProfile(@PathVariable("id") int id,Model model) {
+
+		try {
+		Contact contact=service.findById(id);
+		model.addAttribute("title","Contact Profile");
+		model.addAttribute("contact",contact);
+		}catch (Exception e) {
+			model.addAttribute("message",new Message("Contact not found.","danger"));
+		}
+	return "normal/contact-profile";
+}
 }

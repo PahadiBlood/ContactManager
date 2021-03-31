@@ -11,31 +11,34 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "CONTACT")
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+	@GenericGenerator(name = "native", strategy = "native")
+
 	private int cid;
-	
-	@Size(min=2, message = "Fied should contaion more then 2 charachters.")
+
+	@Size(min = 2, message = "Fied should contaion more then 2 charachters.")
 	@NotBlank(message = "This field can not be blank.")
 	private String name;
 	private String secondName;
 	private String work;
 	private String email;
 	private String image;
-	
-	@Size(min=10, max = 10, message = "Only 10 digits allowed.")
+
+	@Size(min = 10, max = 10, message = "Only 10 digits allowed.")
 	@NotBlank(message = "This field can not be blank.")
 	private String phone;
 
 	@Column(length = 500)
 	private String description;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, 
-			CascadeType.REFRESH, CascadeType.PERSIST })
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
 	private User user;
 
 	public Contact() {
@@ -113,5 +116,4 @@ public class Contact {
 		this.user = user;
 	}
 
-	
 }

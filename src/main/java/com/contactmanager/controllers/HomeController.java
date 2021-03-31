@@ -61,7 +61,7 @@ public class HomeController {
 
 	@RequestMapping("/login")
 	public String loginForm(Model model) {
-	
+
 		model.addAttribute("title", "Log In");
 		model.addAttribute("user", new User());
 		return "normal/login";

@@ -8,6 +8,8 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,8 @@ public class UserServiceImpl implements UserService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else {
+			contact.setImage("contact.png");
 		}
 
 		contactRepo.save(contact);
@@ -77,5 +81,18 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	@Transactional
+	public Page<Contact> findContactsByUserId(int userId,Pageable pageable) {
+		
+		return contactRepo.findContactsByUserId(userId,pageable);
+	}
+
+	@Override
+	public Contact findById(int id) {
+		Contact contact=contactRepo.findById(id);
+		return contact;
 	}
 }
