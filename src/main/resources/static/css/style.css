@@ -83,7 +83,7 @@ body {
 	cursor: pointer;
 }
 
-@media screen and (max-width:800px) {
+@media screen and (max-width:1026px) {
 	.sidebar {
 		width: 65% !important;
 		background: white;
@@ -128,4 +128,43 @@ body {
 	padding: 10px;
 	border: 1px solid #8080808f;
 	font-family: system-ui;
+}
+
+@media(max-width:768px) {
+	
+	.my-card .table thead{
+	display:none;
+	}
+	
+	.my-card .table, .my-card .table tr, .my-card .table tbody, .my-card .table td{
+	display:block;
+	width: 100%;
+	}
+	
+	.my-card .table tr{
+	margin-bottom:15px;
+	border:1px solid #dadfe3;
+	color:#5b6269;
+	}
+	
+	.my-card .table td{
+	position: relative;
+	text-align: right;
+	}
+	
+	.my-card .table td::before{
+	content:attr(data-label) !important;
+	position: absolute;
+	left:0;
+	width: 50%;
+	font-size: 15px;
+	padding-left:10px;
+	text-align: left;
+	font-weight:bold;
+	}
+	
+}
+
+.my-card .table tr:hover{
+	transform:scale(1.02);
 }
