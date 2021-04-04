@@ -130,41 +130,52 @@ body {
 	font-family: system-ui;
 }
 
-@media(max-width:768px) {
-	
-	.my-card .table thead{
-	display:none;
+@media ( max-width :768px) {
+	.my-card .table thead {
+		display: none;
 	}
-	
-	.my-card .table, .my-card .table tr, .my-card .table tbody, .my-card .table td{
-	display:block;
-	width: 100%;
+	.my-card .table, .my-card .table tr, .my-card .table tbody, .my-card .table td
+		{
+		display: block;
+		width: 100%;
 	}
-	
-	.my-card .table tr{
-	margin-bottom:15px;
-	border:1px solid #dadfe3;
-	color:#5b6269;
+	.my-card .table tr {
+		margin-bottom: 15px;
+		border: 1px solid #dadfe3;
+		color: #5b6269;
 	}
-	
-	.my-card .table td{
-	position: relative;
-	text-align: right;
+	.my-card .table td {
+		position: relative;
+		text-align: right;
 	}
-	
-	.my-card .table td::before{
-	content:attr(data-label) !important;
-	position: absolute;
-	left:0;
-	width: 50%;
-	font-size: 15px;
-	padding-left:10px;
-	text-align: left;
-	font-weight:bold;
+	.my-card .table td::before {
+		content: attr(data-label) !important;
+		position: absolute;
+		left: 0;
+		width: 50%;
+		font-size: 15px;
+		padding-left: 10px;
+		text-align: left;
+		font-weight: bold;
 	}
-	
+	.td_frm form {
+		width: 14%;
+	}
+	.td_frm {
+	display: flex !important;
+}
 }
 
-.my-card .table tr:hover{
-	transform:scale(1.02);
+.not_found {
+	margin: 100px 30px;
+	width: 100%;
+	height: 100%;
+}
+
+.td_frm {
+	display: flex;
+}
+
+.td_frm form {
+	margin-right: 5px;
 }

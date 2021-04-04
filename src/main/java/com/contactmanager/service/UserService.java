@@ -14,5 +14,6 @@ public interface UserService {
 	public void save(Contact contact,MultipartFile file);
 	public Page<Contact> findContactsByUserId(int userId,Pageable pageable);
 	public Contact findById(int id);
+	public void delete(Contact contact);
 	
 }

@@ -5,8 +5,8 @@
 </head>
 <body>
 <section>
-<div class="my-card mx-3" th:object="${contact}">
-<div class="row">
+<div class="my-card mx-3" >
+<div th:if="${contact}" class="row" th:object="${contact}">
 <div class="col-md-10 offset-md-1">
 <div class="container text-center">
 
@@ -46,6 +46,17 @@
 </div>
 
 </div>
+
+<th:block th:unless="${contact}">
+<div class="row">
+<div class="col-md-10 offset-md-1">
+<div class="container text-center">
+<img class="not_found text-center" th:src="@{'/img/404.png'}" th:alt="${'Contact not Found'}">
+</div>
+</div>
+</div>
+
+</th:block>
 </div>
 </section>
 </body>

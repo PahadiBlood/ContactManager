@@ -40,6 +40,7 @@ public class UserController {
 
 //show dashboard
 
+	
 	@RequestMapping("/dashboard")
 	public String dasthboard(Model model, Principal principal) {
 
@@ -59,7 +60,7 @@ public class UserController {
 
 	@PostMapping("/addContact")
 	public String saveContactData(@Valid Contact contact, BindingResult result, Model model,
-			@RequestParam("profile_image") MultipartFile file, Principal principal, HttpSession session) {
+			@RequestParam("profile_image") MultipartFile file, Principal principal,HttpSession session) {
 		if (result.hasErrors()) {
 			model.addAttribute("contact", contact);
 			return "normal/contact-form";
@@ -97,17 +98,49 @@ public class UserController {
 	}
 
 	// view contacts profile
-	
+
 	@RequestMapping("/contact/profile/{id}")
-	public String viewContactProfile(@PathVariable("id") int id,Model model) {
+	public String viewContactProfile(@PathVariable("id") int id, Model model, Principal principal) {
 
 		try {
-		Contact contact=service.findById(id);
-		model.addAttribute("title","Contact Profile");
-		model.addAttribute("contact",contact);
-		}catch (Exception e) {
-			model.addAttribute("message",new Message("Contact not found.","danger"));
+			String username = principal.getName();
+			User user = service.findByEmail(username);
+
+			Contact contact = service.findById(id);
+
+			if (user.getId() == contact.getUser().getId()) {
+				model.addAttribute("contact", contact);
+				model.addAttribute("title", user.getName());
+
+			} else {
+				model.addAttribute("title", "Contact Profile");
+
+			}
+		} catch (Exception e) {
+			model.addAttribute("message", new Message("Contact not found.", "danger"));
 		}
-	return "normal/contact-profile";
-}
+		return "normal/contact-profile";
+	}
+
+	@PostMapping("/delete/{currentPageId}/{id}")
+	public String delteContact(@PathVariable("id") int id, @PathVariable("currentPageId") int currentPageId, HttpSession session, Principal principal) {
+		String username = principal.getName();
+		User user = service.findByEmail(username);
+		Contact contact = service.findById(id);
+		if (user.getId() == contact.getUser().getId()) {
+			service.delete(contact);
+			session.setAttribute("message",new Message("Contact has been deleted", "success" ));
+		}else {
+			session.setAttribute("message",new Message("Something went wrong", "danger"));
+		}
+
+		return "redirect:/user/view-contacts/"+currentPageId+"";
+	}
+	
+
+	@PostMapping("/logout")
+	public String logout() {
+		System.out.println("hi");
+		return "redirect:/home";
+	}
 }

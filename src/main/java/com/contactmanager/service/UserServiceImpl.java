@@ -52,10 +52,14 @@ public class UserServiceImpl implements UserService {
 				contact.setImage(file.getOriginalFilename());
 
 				File filePath = new ClassPathResource("static/img").getFile();
+				
+				System.out.println(filePath);
+				System.out.println();
 
 				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + file.getOriginalFilename());
-
+				System.out.println(path);
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -90,9 +94,21 @@ public class UserServiceImpl implements UserService {
 		return contactRepo.findContactsByUserId(userId,pageable);
 	}
 
+	@Transactional
 	@Override
 	public Contact findById(int id) {
 		Contact contact=contactRepo.findById(id);
 		return contact;
+	}
+
+	@Transactional
+	@Override
+	public void delete(Contact contact) {
+		/*
+		 * File path=new ClassPathResource(contact.getImage()).getFile();
+		 * Files.delete(path);
+		 */
+		contactRepo.delete(contact);
+		
 	}
 }

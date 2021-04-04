@@ -18,4 +18,7 @@ public interface ContactReposatory extends JpaRepository<Contact, Integer> {
 	public Page<Contact> findContactsByUserId(int userId,Pageable pageable);
 	
 	public Contact findById(int id);
+	
+	@Query("delete from Contact as c where c.cid=?1")
+	public void delete(int id);
 }
