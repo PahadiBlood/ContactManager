@@ -46,11 +46,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void save(Contact contact, MultipartFile file) {
+	public void save(Contact contact, MultipartFile file,String img) {
 
+		if(!"".equals(img)) {
+		contact.setImage(img);
+		}else {
+			contact.setImage(null);
+		}
+		
 		if (!file.isEmpty()) {
 			try {
-				contact.setImage(file.getOriginalFilename());
+				
 
 				File filePath = new ClassPathResource("static/img").getFile();
 				// gives folder path and adds custom path like 'static/image'.
@@ -58,7 +64,14 @@ public class UserServiceImpl implements UserService {
 
 				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + file.getOriginalFilename());
 				// it gives folder path(filePath) and adds file name
-
+				
+				contact.setImage(file.getOriginalFilename());
+				
+				if(!"".equals(img)) {
+					path = Paths.get(filePath.getAbsolutePath() + File.separator + img);
+					contact.setImage(img);
+				}
+				
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 				// it saves file in folders
 

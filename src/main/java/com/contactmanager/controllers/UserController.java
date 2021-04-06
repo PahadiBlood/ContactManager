@@ -68,17 +68,11 @@ public class UserController {
 		}
 
 		try {
-System.out.println(img);
 			String username = principal.getName();
 			User user = service.findByEmail(username);
 			contact.setCid(id);
-			if(!"".equals(img)) {
-			contact.setImage(img);
-			}else {
-				contact.setImage(null);
-			}
 			user.getContacts().add(contact);
-			service.save(contact, file);
+			service.save(contact, file,img);
 			model.addAttribute("contact", new Contact());
 			if (id == 0) {
 				session.setAttribute("message", new Message("Contact has been saved.", "success"));

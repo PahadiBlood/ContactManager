@@ -11,7 +11,7 @@ public interface UserService {
 	
 	public void save(User user);
 	public User findByEmail(String username);
-	public void save(Contact contact,MultipartFile file);
+	public void save(Contact contact,MultipartFile file,String img);
 	public Page<Contact> findContactsByUserId(int userId,Pageable pageable);
 	public Contact findById(int id);
 	public void delete(Contact contact);
