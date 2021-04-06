@@ -38,7 +38,7 @@ public class Contact {
 	@Column(length = 500)
 	private String description;
 
-	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST })
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
 	private User user;
 
 	public Contact() {

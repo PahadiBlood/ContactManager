@@ -1,6 +1,7 @@
 package com.contactmanager.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,21 +53,24 @@ public class UserServiceImpl implements UserService {
 				contact.setImage(file.getOriginalFilename());
 
 				File filePath = new ClassPathResource("static/img").getFile();
-				
-				System.out.println(filePath);
-				System.out.println();
+				// gives folder path and adds custom path like 'static/image'.
+				// ex=C://projectfolder/static/image
 
 				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + file.getOriginalFilename());
-				System.out.println(path);
+				// it gives folder path(filePath) and adds file name
+
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				
+				// it saves file in folders
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else {
+		} else {
+		
+			if(contact.getImage()==null) {
 			contact.setImage("contact.png");
+			}
 		}
-
 		contactRepo.save(contact);
 
 	}
@@ -89,26 +93,33 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Page<Contact> findContactsByUserId(int userId,Pageable pageable) {
-		
-		return contactRepo.findContactsByUserId(userId,pageable);
+	public Page<Contact> findContactsByUserId(int userId, Pageable pageable) {
+
+		return contactRepo.findContactsByUserId(userId, pageable);
 	}
 
 	@Transactional
 	@Override
 	public Contact findById(int id) {
-		Contact contact=contactRepo.findById(id);
+		Contact contact = contactRepo.findById(id);
 		return contact;
 	}
 
 	@Transactional
 	@Override
 	public void delete(Contact contact) {
-		/*
-		 * File path=new ClassPathResource(contact.getImage()).getFile();
-		 * Files.delete(path);
-		 */
+		String image = contact.getImage();
+		if(!"contact.png".equals(image)) {
+		File filePath;
+		try {
+			filePath = new ClassPathResource("static/img").getFile();
+			Path path = Paths.get(filePath.getAbsolutePath() + File.separator + image);
+			Files.delete(path);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
 		contactRepo.delete(contact);
-		
+
 	}
 }

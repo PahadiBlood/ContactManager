@@ -49,7 +49,7 @@ public class User {
 	@Column(length = 500)
 	private String about;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private List<Contact> contacts = new ArrayList<Contact>();
 

@@ -40,7 +40,6 @@ public class UserController {
 
 //show dashboard
 
-	
 	@RequestMapping("/dashboard")
 	public String dasthboard(Model model, Principal principal) {
 
@@ -60,20 +59,32 @@ public class UserController {
 
 	@PostMapping("/addContact")
 	public String saveContactData(@Valid Contact contact, BindingResult result, Model model,
-			@RequestParam("profile_image") MultipartFile file, Principal principal,HttpSession session) {
+			@RequestParam("profile_image") MultipartFile file, Principal principal, 
+			@RequestParam("id") int id,
+			HttpSession session, @RequestParam("profile_img") String img) {
 		if (result.hasErrors()) {
 			model.addAttribute("contact", contact);
 			return "normal/contact-form";
 		}
 
 		try {
-
+System.out.println(img);
 			String username = principal.getName();
 			User user = service.findByEmail(username);
+			contact.setCid(id);
+			if(!"".equals(img)) {
+			contact.setImage(img);
+			}else {
+				contact.setImage(null);
+			}
 			user.getContacts().add(contact);
 			service.save(contact, file);
 			model.addAttribute("contact", new Contact());
-			session.setAttribute("message", new Message("Contact has been saved.", "success"));
+			if (id == 0) {
+				session.setAttribute("message", new Message("Contact has been saved.", "success"));
+			} else {
+				session.setAttribute("message", new Message("Contact has been updated.", "success"));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,24 +134,44 @@ public class UserController {
 	}
 
 	@PostMapping("/delete/{currentPageId}/{id}")
-	public String delteContact(@PathVariable("id") int id, @PathVariable("currentPageId") int currentPageId, HttpSession session, Principal principal) {
+	public String delteContact(@PathVariable("id") int id, @PathVariable("currentPageId") int currentPageId,
+			HttpSession session, Principal principal) {
 		String username = principal.getName();
 		User user = service.findByEmail(username);
 		Contact contact = service.findById(id);
 		if (user.getId() == contact.getUser().getId()) {
 			service.delete(contact);
-			session.setAttribute("message",new Message("Contact has been deleted", "success" ));
-		}else {
-			session.setAttribute("message",new Message("Something went wrong", "danger"));
+			session.setAttribute("deleteContact", new Message("Contact has been deleted", "success"));
+		} else {
+			session.setAttribute("deleteContact", new Message("Something went wrong", "danger"));
+		}
+		return "redirect:/user/view-contacts/" + currentPageId;
+	}
+
+	@PostMapping("/delete/{id}")
+	public String delteContactProfile(@PathVariable("id") int id, HttpSession session, Principal principal) {
+		String username = principal.getName();
+		User user = service.findByEmail(username);
+		Contact contact = service.findById(id);
+		if (user.getId() == contact.getUser().getId()) {
+			service.delete(contact);
+		} else {
+			session.setAttribute("deleteContact", new Message("Something went wrong", "danger"));
+		}
+		return "redirect:/user/contact/profile/" + id;
+	}
+
+	@PostMapping("/update/{id}")
+	public String updateContact(Model model, @PathVariable("id") int id, Principal principal) {
+		String username = principal.getName();
+		User user = service.findByEmail(username);
+		Contact contact = service.findById(id);
+		if (user.getId() == contact.getUser().getId()) {
+			model.addAttribute("contact", contact);
+			return "normal/contact-form";
+		} else {
+			return "redirect:/user/veiw-contacts/0";
 		}
 
-		return "redirect:/user/view-contacts/"+currentPageId+"";
-	}
-	
-
-	@PostMapping("/logout")
-	public String logout() {
-		System.out.println("hi");
-		return "redirect:/home";
 	}
 }

@@ -83,7 +83,7 @@ body {
 	cursor: pointer;
 }
 
-@media screen and (max-width:1026px) {
+@media screen and (max-width:1100px) {
 	.sidebar {
 		width: 65% !important;
 		background: white;
@@ -130,7 +130,7 @@ body {
 	font-family: system-ui;
 }
 
-@media ( max-width :768px) {
+@media ( max-width :862px) {
 	.my-card .table thead {
 		display: none;
 	}
@@ -158,12 +158,6 @@ body {
 		text-align: left;
 		font-weight: bold;
 	}
-	.td_frm form {
-		width: 14%;
-	}
-	.td_frm {
-	display: flex !important;
-}
 }
 
 .not_found {
@@ -172,10 +166,12 @@ body {
 	height: 100%;
 }
 
-.td_frm {
-	display: flex;
+.td_frm form{
+	float:right;
+	margin-left:5px;
+	margin-right:5px;
 }
-
-.td_frm form {
-	margin-right: 5px;
+.con_pro {
+    background-color: white;
+    padding: 15px;
 }
