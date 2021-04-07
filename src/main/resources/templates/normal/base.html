@@ -35,7 +35,9 @@
         </li>
         
          <li class="nav-item">
-          <a class="nav-link" th:href="@{/logout}">Logout</a>
+          <form id="myform" th:action="@{/logout}" method="POST">
+          <a href="javascript: submitForm()" class="nav-link">Logout</a>
+          </form>
         </li>
       </ul>
     </div>
@@ -47,12 +49,14 @@
 <div class="sidebar">
 <span onclick="toggleSidebar()" class="cls_btn"><i class="fas fa-times"></i></span>
 
-<a href="#" class="item" th:href="@{/user/dashboard}"> <i class="fas fa-home m-1"></i>Home</a>
 <a href="#" class="item" th:href="@{/user/view-contacts/0}"><i class="fas fa-address-book m-1"></i>View Contacts</a>
 <a href="#" class="item" th:href="@{/user/contact-form}"><i class="fas fa-pencil-alt m-1"></i>Add Contact</a>
 <a href="#" class="item" th:href="@{/user/profile}"><i class="fas fa-user-circle m-1"></i>Profile</a>
 <a href="#" class="item" th:href="@{/user/settings}"><i class="fas fa-cogs m-1"></i>Settings</a>
-<a href="#" class="item" th:href="@{/logout}"><i class="fas fa-sign-out-alt m-1"></i>Logout</a>
+
+<form id="myform" th:action="@{/logout}" method="POST">
+          <a href="javascript: submitForm()" class="nav-link"><i class="fas fa-sign-out-alt m-1"></i>Logout</a>
+          </form>
 <div class="divider"> </div>
 </div>
 

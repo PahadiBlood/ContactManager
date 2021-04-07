@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.contactmanager.service.UserDetailsServiceImpl;
 
@@ -33,7 +34,11 @@ public class CustomSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.antMatchers("/**").permitAll()
 	.and()
 	    .formLogin()
-	    .loginPage("/login").defaultSuccessUrl("/user/dashboard");
+	    .loginPage("/login").defaultSuccessUrl("/user/view-contacts/0")
+	.and()
+	    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout","POST"))
+	    .logoutSuccessUrl("/login");
+	     
 	}
 
 	@Bean

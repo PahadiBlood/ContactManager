@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<section>
+<div class="mx-3 con_pro">
+<div th:if="${user}" class="row" th:object="${user}">
+<div class="col-md-10 offset-md-1">
+<div class="container text-center">
+<img class="contact_profile_pic" th:src="@{'/img/'+*{imageUrl}}" th:alt="*{name}">
+<h2 class="my-2" style="font-family: revert" th:text="*{name}"></h2>
+
+</div>
+
+<table class="table">
+<thead>
+<tr th:if="*{!#strings.isEmpty(email)}">
+<th scope="col">Email</th>
+<td th:text="*{email}"></td>
+</tr>
+<tr th:if="*{!#strings.isEmpty(role)}">
+<th scope="col">Role</th>
+<td th:text="*{role}"></td>
+</tr>
+</thead>
+</table>
+<div th:if="*{!#strings.isEmpty(about)}" class="bio">
+<p th:text="*{about}"></p>
+</div>
+
+<table class="table">
+<tr>
+<td class="td_frm text-end border-bottom-0">
+<form th:method="post" th:action="@{'/user/update/profile/'+*{id}}">
+<button class="btn btn-primary btn-sm">Update</button>			
+</form>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+</body>
+</html>

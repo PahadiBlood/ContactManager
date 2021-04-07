@@ -37,14 +37,14 @@ public class UserController {
 		User user = service.findByEmail(username);
 		model.addAttribute("user", user);
 	}
-
-//show dashboard
-
-	@RequestMapping("/dashboard")
-	public String dasthboard(Model model, Principal principal) {
-
-		return "normal/user-dashboard";
-	}
+	/*
+	 * //show dashboard
+	 * 
+	 * @RequestMapping("/dashboard") public String dasthboard(Model model, Principal
+	 * principal) {
+	 * 
+	 * return "normal/user-dashboard"; }
+	 */
 
 //show contact form
 
@@ -167,5 +167,13 @@ public class UserController {
 			return "redirect:/user/veiw-contacts/0";
 		}
 
+	}
+	
+	@RequestMapping("/profile")
+	public String userProfile(Model model,Principal principal) {
+		User user=service.findByEmail(principal.getName());
+		model.addAttribute("title","Profile");
+		model.addAttribute("user",user);
+		return "normal/profile";
 	}
 }

@@ -58,3 +58,8 @@ swal({
   }
 });
 }
+
+function submitForm(){
+document.forms["myform"].submit();
+alert("working");
+}
