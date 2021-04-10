@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "CONTACT")
 public class Contact {
@@ -38,6 +40,7 @@ public class Contact {
 	@Column(length = 500)
 	private String description;
 
+	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
 	private User user;
 

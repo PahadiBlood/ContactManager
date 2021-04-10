@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -134,5 +135,11 @@ public class UserServiceImpl implements UserService {
 		}
 		contactRepo.delete(contact);
 
+	}
+
+	@Override
+	public List<Contact> findByNameContainingAndUser(String name, User user) {
+		
+		return contactRepo.findByNameContainingAndUser(name, user);
 	}
 }
