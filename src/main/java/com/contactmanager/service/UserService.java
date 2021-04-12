@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.contactmanager.enitiy.Contact;
+import com.contactmanager.enitiy.OTP;
 import com.contactmanager.enitiy.User;
 
 public interface UserService {
@@ -18,5 +19,7 @@ public interface UserService {
 	public Contact findById(int id);
 	public void delete(Contact contact);
 	public List<Contact> findByNameContainingAndUser(String name,User user);
+	public String findEmail(String email);
+	public void save(OTP otp);
 	
 }

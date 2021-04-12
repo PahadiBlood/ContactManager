@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<section>
+<div class="my-card mx-3">
+<h2 class=" text-center">Change Password</h2>
+<div class="container my-2">
+<div class="row">
+<div class="col-md-6 offset-md-3 px-5 py-4 border">
+<form th:action="@{/verify/send-otp}" method="post">
+<div class="mb-3">
+<label for="ForgotPassword" class="form-label">Email</label>
+<input th:classappend="${session.message!=null ? 'is-invalid' : ''}" class="form-control mb-2" placeholder="Enter email" type="email" name="forgot-password">
+ <div class="invalid-feedback" th:text=${session.message}></div>
+ <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+<button class="btn bg-primary">Send OTP</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+</body>
+</html>

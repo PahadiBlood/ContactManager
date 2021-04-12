@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<section>
+<div class="container">
+<div class="row">
+<div class="col-md-10 offset-md-1">
+<div class="my-card mb-5">
+<div class="col-md-8 offset-md-2">
+<h3 class="text-center my-4">Add Contact</h3>
+<div th:if="${session.message}" th:classappend="${'alert-'+session.message.type}" 
+class="alert text-center" th:text="${session.message.content}" role="alert">
+</div>
+<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+<form method="post" th:action="@{/user/addContact}" th:object="${contact}" enctype="multipart/form-data" class="mt-2">
+<input type="hidden" th:value="*{cid}" th:attr="name='id'">
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-user"></i>
+</div>
+
+<input type="text" name="name" id="name" placeholder="Enter name" class="form-control"
+th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" th:value="*{name}">
+<div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
+</div>
+
+
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-user"></i>
+</div>
+<input type="text" name="secondName" id="secondName" placeholder="Enter nick name" class="form-control"
+th:classappend="${#fields.hasErrors('secondName') ? 'is-invalid' : ''}" th:value="*{secondName}">
+<div class="invalid-feedback" th:each="e: ${#fields.errors('secondName')}" th:text="${e}"></div>
+</div>
+
+
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-at"></i>
+</div>
+<input type="email" name="email" id="email" placeholder="Enter email" class="form-control"
+th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}" th:value="*{email}">
+<div class="invalid-feedback" th:each="e: ${#fields.errors('email')}" th:text="${e}"></div>
+</div>
+
+
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-briefcase"></i>
+</div>
+<input type="text" name="work" id="work" placeholder="Add work" class="form-control"
+th:classappend="${#fields.hasErrors('work') ? 'is-invalid' : ''}" th:value="*{work}">
+<div class="invalid-feedback" th:each="e: ${#fields.errors('work')}" th:text="${e}"></div>
+</div>
+
+
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-phone"></i>
+</div>
+<input type="text" name="phone" id="phone" placeholder="Add phone" class="form-control"
+th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}" th:value="*{phone}">
+<div class="invalid-feedback" th:each="e: ${#fields.errors('phone')}" th:text="${e}"></div>
+</div>
+
+<div class="input-group mb-3">
+<!-- <div class="input-group-text">
+<i class="fa fa-image"></i>
+</div> -->
+  <textarea class="form-control" th:text="*{description}" id="description" name="description" rows="4"></textarea>
+<div class="invalid-feedback" th:each="e: ${#fields.errors('description')}" th:text="${e}"></div>
+</div>
+
+<div class="input-group mb-3">
+<div class="input-group-text">
+<i class="fa fa-image"></i>
+</div>
+<input type="hidden" th:value="*{image}" th:attr="name='profile_img'">
+  <input class="form-control" type="file" id="profile_image" name="profile_image">
+</div>
+
+<div class="input-group mb-3">
+<input class="btn bg-primary" type="submit" value="Save">
+</div>
+
+</form>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</body>
+</html>

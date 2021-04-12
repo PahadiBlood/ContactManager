@@ -18,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.contactmanager.enitiy.Contact;
+import com.contactmanager.enitiy.OTP;
 import com.contactmanager.enitiy.User;
 import com.contactmanager.reposatory.ContactReposatory;
+import com.contactmanager.reposatory.OtpReposatory;
 import com.contactmanager.reposatory.UserReposatory;
 
 @Service
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
 		userRepo = theUserRepo;
 	}
 
+	@Autowired
+	private OtpReposatory otpRepo;
+
 	@Override
 	@Transactional
 	public User findByEmail(String username) {
@@ -47,17 +52,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void save(Contact contact, MultipartFile file,String img) {
+	public void save(Contact contact, MultipartFile file, String img) {
 
-		if(!"".equals(img)) {
-		contact.setImage(img);
-		}else {
+		if (!"".equals(img)) {
+			contact.setImage(img);
+		} else {
 			contact.setImage(null);
 		}
-		
+
 		if (!file.isEmpty()) {
 			try {
-				
 
 				File filePath = new ClassPathResource("static/img").getFile();
 				// gives folder path and adds custom path like 'static/image'.
@@ -65,14 +69,14 @@ public class UserServiceImpl implements UserService {
 
 				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + file.getOriginalFilename());
 				// it gives folder path(filePath) and adds file name
-				
+
 				contact.setImage(file.getOriginalFilename());
-				
-				if(!"".equals(img)) {
+
+				if (!"".equals(img)) {
 					path = Paths.get(filePath.getAbsolutePath() + File.separator + img);
 					contact.setImage(img);
 				}
-				
+
 				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 				// it saves file in folders
 
@@ -80,9 +84,9 @@ public class UserServiceImpl implements UserService {
 				e.printStackTrace();
 			}
 		} else {
-		
-			if(contact.getImage()==null) {
-			contact.setImage("contact.png");
+
+			if (contact.getImage() == null) {
+				contact.setImage("contact.png");
 			}
 		}
 		contactRepo.save(contact);
@@ -123,23 +127,37 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Contact contact) {
 		String image = contact.getImage();
-		if(!"contact.png".equals(image)) {
-		File filePath;
-		try {
-			filePath = new ClassPathResource("static/img").getFile();
-			Path path = Paths.get(filePath.getAbsolutePath() + File.separator + image);
-			Files.delete(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (!"contact.png".equals(image)) {
+			File filePath;
+			try {
+				filePath = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + image);
+				Files.delete(path);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		contactRepo.delete(contact);
 
 	}
 
+	@Transactional
 	@Override
 	public List<Contact> findByNameContainingAndUser(String name, User user) {
-		
+
 		return contactRepo.findByNameContainingAndUser(name, user);
+	}
+
+	@Transactional
+	@Override
+	public String findEmail(String email) {
+
+		return userRepo.findEmail(email);
+	}
+
+	@Transactional
+	@Override
+	public void save(OTP otp) {
+		otpRepo.save(otp);
 	}
 }

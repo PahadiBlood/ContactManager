@@ -187,5 +187,14 @@ public class UserController {
 		User user = service.findByEmail(principal.getName());
 		List<Contact> contacts = service.findByNameContainingAndUser(name, user);
 		return ResponseEntity.ok(contacts);
-	};
+	}
+
+	// settings
+
+	@RequestMapping("/settings")
+	public String viewSettings() {
+
+		return "normal/settings";
+	}
+
 }

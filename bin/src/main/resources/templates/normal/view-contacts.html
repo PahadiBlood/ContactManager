@@ -2,7 +2,7 @@
 <html xmlns:th="http://thymeleaf.org"
 	th:replace="normal/base::Layout(~{::section})">
 <head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 </head>
 <body>
 	<section>
@@ -86,13 +86,6 @@
 <a class="btn bg-primary" th:href="@{/user/contact-form}">Add contact</a>
 </div>
 </th:block>	
-<th:block th:if="${contact.empty}">
-<div class="not_found text-center">
-<h1 style="color:red">404</h1>
-<p>Contacts not available.</p>
-<a class="btn bg-primary" th:href="@{/user/contact-form}">Add contact</a>
-</div>
-</th:block>
 </div>
 		
 </section>

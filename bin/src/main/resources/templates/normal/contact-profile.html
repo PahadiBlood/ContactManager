@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+</head>
+<body>
+<section>
+<div class="mx-3 con_pro">
+<div th:if="${contact}" class="row" th:object="${contact}">
+<div class="col-md-10 offset-md-1">
+<div class="container text-center">
+<img class="contact_profile_pic" th:src="@{'/img/'+*{image}}" th:alt="*{name}">
+<h2 class="my-2" style="font-family: revert" th:text="*{name}"></h2>
+
+</div>
+
+<table class="table">
+<thead>
+<tr th:if="*{!#strings.isEmpty(secondName)}">
+<th scope="col" >Nick Name</th>
+<td th:text="*{secondName}"></td>
+</tr>
+<tr th:if="*{!#strings.isEmpty(phone)}">
+<th scope="col">Phone</th>
+<td th:text="*{phone}"></td>
+</tr>
+<tr th:if="*{!#strings.isEmpty(email)}">
+<th scope="col">Email</th>
+<td th:text="*{email}"></td>
+</tr>
+<tr th:if="*{!#strings.isEmpty(work)}">
+<th scope="col">Work</th>
+<td th:text="*{work}"></td>
+</tr>
+</thead>
+</table>
+<div th:if="*{!#strings.isEmpty(description)}" class="bio">
+<p th:text="*{description}"></p>
+</div>
+
+<table class="table">
+<tr>
+<td class="td_frm text-end border-bottom-0">
+<button th:name="*{name}" th:onclick="|deleteContactProfile(*{cid},this.getAttribute('name'))|"
+ class="btn btn-danger btn-sm">Delete</button>
+<form th:method="post" th:action="@{'/user/update/'+*{cid}}">
+<button class="btn btn-primary btn-sm">Update</button>			
+</form>
+</td>
+</tr>
+</table>
+</div>
+
+
+</div>
+
+<th:block th:unless="${contact}">
+<div class="not_found text-center">
+<h1 style="color:red">404</h1>
+<p>Contacts not available.</p>
+<a class="btn bg-primary" th:href="@{/user/contact-form}">Add contact</a>
+</div>
+
+</th:block>
+</div>
+</section>
+</body>
+</html>

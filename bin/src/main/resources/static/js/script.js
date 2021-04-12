@@ -80,6 +80,7 @@ const search = () => {
       })
       .then((data) => {
         if (Object.keys(data).length) {
+d
           let text = `<div class='list-group'>`;
           data.forEach((contact) => {
             text += `<a href='/user/contact/profile/${contact.cid}' class='list-group-item list-group-item-action'>${contact.name}</a>`;
